@@ -1,10 +1,10 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:organico/view/pages/home_page.dart';
-import 'package:organico/view/pages/sign_up_page.dart';
+
+import 'sign_up_page.dart';
 
 class SplashScrenn extends StatefulWidget {
   const SplashScrenn({super.key});
@@ -14,25 +14,30 @@ class SplashScrenn extends StatefulWidget {
 }
 
 class _SplashScrennState extends State<SplashScrenn> {
-  void initstate() {
-    Future.delayed(const Duration(seconds: 3)).then((value) => null);
+  void initState() {
+    Future.delayed(const Duration(seconds: 3)).then((value) => {chekUser()});
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Splash Screnn")),
+    return  Scaffold(
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:const [
+          
+          Image(image: AssetImage("assets/Logo.png")),
+          SizedBox(height: 20,),
+          Text("Organico",style: TextStyle(fontSize: 24),)
+        ],
+      )),
     );
   }
 
-  void ChekUser() {
+  void chekUser() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ));
+        Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
       } else {
         Navigator.push(
             context,

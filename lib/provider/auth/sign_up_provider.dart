@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import '../../helpers/show_message_widget.dart';
+
 class SignUpProvider extends ChangeNotifier {
   //Logic..
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   bool isLoading = false;
   Future<dynamic> singUp() async {
     try {
@@ -32,4 +34,3 @@ class SignUpProvider extends ChangeNotifier {
     }
   }
 }
-
