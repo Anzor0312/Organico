@@ -1,4 +1,5 @@
-import 'dart:ui';
+
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:organico/provider/view/favorite_provider.dart';
@@ -92,7 +93,10 @@ class InfoPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 24),
                     ),
                   ],
-                )
+                ),
+              const  SizedBox(height: 35,),
+                const Text("Details" ,style:  TextStyle(fontSize: 24)),
+                Text(data['details'].toString())
               ],
             ),
           ),

@@ -1,8 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:organico/provider/view/home/home_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,18 +14,16 @@ class ChooseCategory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Choost Category"),
+        title: const Text("Choost Category"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: context.read<HomeProvider>().categoryStream,
         builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-          print(snapshot.data);
           if (snapshot.hasError) {
             return const Center(
               child: Text("Server error"),
             );
           } else if (!snapshot.hasData) {
-            print(snapshot);
             return const Center(
               child: CircularProgressIndicator(),
             );

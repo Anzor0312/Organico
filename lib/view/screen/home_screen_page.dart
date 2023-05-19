@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:organico/provider/view/favorite_provider.dart';
 import 'package:organico/provider/view/info_provider.dart';
+import 'package:organico/view/pages/Info_page.dart';
 import 'package:organico/view/pages/categoyr_page.dart';
 import 'package:organico/view/pages/chooseCategory_page.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/view/home/home_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -32,13 +29,13 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Bandung, Cimahi",
                     style: TextStyle(fontSize: 18),
                   ),
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.keyboard_arrow_down_outlined))
+                      icon: const Icon(Icons.keyboard_arrow_down_outlined))
                 ],
               ),
               TextField(
@@ -66,8 +63,8 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                       ),
-                      Column(
-                        children: const [
+                      const Column(
+                        children: [
                           Text(
                             "You have 0 coupon",
                             style: TextStyle(fontSize: 18),
@@ -97,7 +94,10 @@ class HomeScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => ChooseCategory(),));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChooseCategory(),
+                            ));
                       },
                       child: const Text("See all"))
                 ],
@@ -186,9 +186,7 @@ class HomeScreen extends StatelessWidget {
                   TextButton(onPressed: () {}, child: const Text("See all"))
                 ],
               ),
-              Expanded(
-                flex: 5,
-                child: const BestSelling())
+              const Expanded(flex: 5, child: BestSelling())
             ],
           ),
         ),
@@ -203,66 +201,92 @@ class BestSelling extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  StreamBuilder<QuerySnapshot>(
-            stream: context.read<InfoProvider>().bestStream,
-            builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-              if (snapshot.hasError) {
+      body: StreamBuilder<QuerySnapshot>(
+          stream: context.read<InfoProvider>().bestStream,
+          builder: (context, AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text("SERVER ERROR"),
+              );
+            } else if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              List<Map<String, dynamic>> data = [];
+              snapshot.data!.docs.map((DocumentSnapshot document) {
+                data.add(document.data() as Map<String, dynamic>);
+              }).toList();
+
+              if (data.isEmpty) {
                 return const Center(
-                  child: Text("SERVER ERROR"),
-                );
-              } else if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text(" QO'SHILMAGAN"),
                 );
               } else {
-                List<Map<String, dynamic>> data = [];
-                snapshot.data!.docs.map((DocumentSnapshot document) {
-                  data.add(document.data() as Map<String, dynamic>);
-                }).toList();
-
-                if (data.isEmpty) {
-                  return const Center(
-                    child: Text(" QO'SHILMAGAN"),
-                  );
-                } else {
-                  return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1
-                        ),scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: Container(
-                          width: 196,
-                          height: 242,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blueAccent),
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Container(
+                        width: 196,
+                        height: 242,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.blueAccent),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.network(data[index]['img'],
-                                      fit: BoxFit.cover),
-                                
+                                  SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: Image.network(
+                                      data[index]['img'],
+                                    ),
+                                  ),
                                 ],
                               ),
                               Text(data[index]['name']),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("${data[index]["price"]}/Kg"),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  InfoPage(data: data[index]),
+                                            ));
+                                      },
+                                      child: const Image(
+                                          image: AssetImage("assets/add.png")))
+                                ],
+                              )
                             ],
                           ),
                         ),
-                      );
-                    },
-                    itemCount: data.length,
-                  );
-                }
+                      ),
+                    );
+                  },
+                  itemCount: data.length,
+                );
               }
-            }),
-      
+            }
+          }),
     );
   }
 }
+

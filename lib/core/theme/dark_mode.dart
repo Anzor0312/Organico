@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ClickDarkThemeMode {
   static ThemeData theme = ThemeData(
  textTheme:const TextTheme(
-bodyText1: TextStyle(color: Color.fromARGB(255, 218, 213, 213),backgroundColor:Colors.white )
+bodyLarge: TextStyle(color: Color.fromARGB(255, 218, 213, 213),backgroundColor:Colors.white )
  ) ,
     scaffoldBackgroundColor:const Color(0xff171725),
     appBarTheme: const AppBarTheme(

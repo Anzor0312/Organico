@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:organico/view/screen/cart_screen_page.dart';
 import 'package:organico/view/screen/explore_screen_page.dart';

@@ -74,6 +74,7 @@ class CategoryPage extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => InfoPage(
+                                            // ignore: unnecessary_cast
                                             data: (data[index]
                                                 as Map<String, dynamic>)),
                                       ));

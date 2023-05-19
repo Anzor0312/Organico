@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/auth/sign_in_provider.dart';
@@ -34,11 +32,11 @@ class SignInPage extends StatelessWidget {
                   height: 318,
                     child:const Image(image: AssetImage("assets/welkom.png"),fit: BoxFit.fill,)),
                 ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 69),
+            const Padding(
+              padding: EdgeInsets.only(left: 20, top: 69),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text("Welcome", style: TextStyle(fontSize: 20)),
                   SizedBox(
                     height: 16,

@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:organico/view/pages/favorite_page.dart';
 import 'package:organico/view/pages/theme_mode_page.dart';
 
@@ -35,8 +32,8 @@ class ProfileScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.2),
-                    child: Column(
-                      children: const [
+                    child: const Column(
+                      children: [
                         CircleAvatar(
                           radius: 85.5,
                           backgroundImage: NetworkImage(

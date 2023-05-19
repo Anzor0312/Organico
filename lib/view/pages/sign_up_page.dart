@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:organico/view/pages/sign_in_page.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth/sign_up_provider.dart';
@@ -48,7 +46,6 @@ class SignUpPage extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-            double height = MediaQuery.of(context).size.height;
              double width = MediaQuery.of(context).size.width;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -167,7 +164,7 @@ class SignUpPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomePage(),
+                                  builder: (context) => const HomePage(),
                                 ));
                           }
                         });
@@ -179,11 +176,11 @@ class SignUpPage extends StatelessWidget {
                             )
                           : const CircularProgressIndicator.adaptive()),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         "or use",
                         style:
